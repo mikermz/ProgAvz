@@ -1,0 +1,25 @@
+## YAML Template.
+version: "3.8"
+services:
+ 
+  tomcat:
+    container_name: miproyecto-tomcat
+    image: final:latest
+    ports:
+      - 8080:8080
+    volumes:
+      - ../target/miproyecto.war:/usr/local/tomcat/webapps/miproyecto.war
+      - ../target/miproyecto:/usr/local/tomcat/webapps/miproyecto
+    links:
+      - "mysql:db"
+ 
+  mysql:
+    container_name: miproyecto-mysql
+    image: my-db:latest
+    environment:
+       MYSQL_ROOT_PASSWORD: "mypass"
+    volumes:
+      - ../mysql:/var/lib/mysql
+    ports:
+      - "3307:3307"
+    restart: unless-stopped
